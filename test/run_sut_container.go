@@ -22,15 +22,6 @@ func RunSUTContainer(t testing.TB, ctx context.Context, port string) (*testconta
 			Context:       "../",
 			PrintBuildLog: true,
 		},
-		// Env: map[string]string{
-		// 	"NATS_SERVER_URI": natsServerURI,
-		// },
-		// Networks: []string{
-		// 	"test-network",
-		// },
-		// NetworkAliases: map[string][]string{
-		// 	"test-network": {"dashboard"},
-		// },
 		ExposedPorts: []string{fmt.Sprintf("%s:%s", port, port)},
 		WaitingFor:   wait.ForListeningPort(nat.Port(port)).WithStartupTimeout(5 * time.Second),
 	}
