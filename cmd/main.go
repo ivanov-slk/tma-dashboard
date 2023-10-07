@@ -1,15 +1,14 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/ivanov-slk/tma-dashboard/adapters/httpserver"
 )
 
 func main() {
-	if err := http.ListenAndServe(":1337", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "hello message")
-	})); err != nil {
+	if err := http.ListenAndServe(":1337", http.HandlerFunc(httpserver.MetricsHandler)); err != nil {
 		log.Fatal(err)
 	}
 }
