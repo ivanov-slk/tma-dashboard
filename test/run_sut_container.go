@@ -22,8 +22,14 @@ func RunSUTContainer(t testing.TB, ctx context.Context, port string) (*testconta
 			Context:       "../",
 			PrintBuildLog: true,
 		},
+		Networks: []string{
+			"test-network",
+		},
+		NetworkAliases: map[string][]string{
+			"test-network": {"dashboard"},
+		},
 		ExposedPorts: []string{fmt.Sprintf("%s:%s", port, port)},
-		WaitingFor:   wait.ForListeningPort(nat.Port(port)).WithStartupTimeout(5 * time.Second),
+		WaitingFor:   wait.ForListeningPort(nat.Port(port)).WithStartupTimeout(120 * time.Second),
 	}
 
 	sut, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{

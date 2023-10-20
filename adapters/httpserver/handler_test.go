@@ -1,14 +1,13 @@
 package httpserver
 
 import (
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 )
 
 func TestHandler(t *testing.T) {
-	req, _ := http.NewRequest(http.MethodGet, fmt.Sprint("/metrics"), nil)
+	req, _ := http.NewRequest(http.MethodGet, "/metrics", nil)
 	resp := httptest.NewRecorder()
 
 	MetricsHandler(resp, req)

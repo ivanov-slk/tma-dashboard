@@ -2,6 +2,7 @@ package main_test
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"testing"
 	"time"
@@ -9,6 +10,9 @@ import (
 	"github.com/ivanov-slk/tma-dashboard/adapters/httpserver"
 	test "github.com/ivanov-slk/tma-dashboard/test"
 	"github.com/ivanov-slk/tma-dashboard/test/specifications"
+	"github.com/nats-io/nats.go"
+	"github.com/nats-io/nats.go/jetstream"
+	"github.com/testcontainers/testcontainers-go"
 )
 
 func TestDashboardServer(t *testing.T) {
@@ -19,13 +23,48 @@ func TestDashboardServer(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(time.Second*120))
 	defer cancel()
 
+	networkName := "test-network"
+	newNetwork, err := testcontainers.GenericNetwork(ctx, testcontainers.GenericNetworkRequest{
+		NetworkRequest: testcontainers.NetworkRequest{
+			Name:           networkName,
+			CheckDuplicate: true,
+		},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() {
+		newNetwork.Remove(ctx)
+	})
+
+	natsContainer, natsCleanup, err := test.RunNATSContainer(t, ctx)
+	if err != nil {
+		t.Fatalf("could not initalize nats server: %s", err)
+	}
+	defer natsCleanup()
+
+	// Publish a message to NATS
+	nc, err := nats.Connect(natsContainer.URI)
+	if err != nil {
+		log.Fatalf("ERROR: failed to connect to nats server: %s", err)
+	}
+	defer nc.Close()
+
+	js, _ := jetstream.New(nc)
+
+	js.CreateStream(ctx, jetstream.StreamConfig{
+		Name:     "TMA",
+		Subjects: []string{"generated-data"},
+	})
+
+	js.Publish(ctx, "generated-data", []byte("hello message"))
+
 	_, sutCleanup, err := test.RunSUTContainer(t, ctx, "1337")
 	if err != nil {
 		t.Fatalf("could not initialize sut: %s", err)
 	}
 	defer sutCleanup()
 
-	// Run the dashboard as a container here; later add NATS to source data from.
-	driver := httpserver.Driver{BaseURL: "http://localhost:1337", Client: &http.Client{Timeout: 3 * time.Second}}
+	driver := httpserver.Driver{BaseURL: "http://localhost:1337", Client: &http.Client{Timeout: 120 * time.Second}}
 	specifications.ExtractMetricsSpecification(t, &driver)
 }
