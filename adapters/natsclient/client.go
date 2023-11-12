@@ -18,17 +18,14 @@ type NATSConnection struct {
 }
 
 func FetchMessage() string {
-	// have a server with consumer object that can be stubbed for testing?
+	// have a NATSConnection with consumer object that can be stubbed for testing?
 	natsConnection, err := connectToNATS()
-	if err != nil {
-		log.Printf("error during consumer initialization: %s", err)
-		defer natsConnection.CancelCtx()
-		defer natsConnection.NATSConn.Close()
-		return "hello message"
-	}
-
 	defer natsConnection.CancelCtx()
 	defer natsConnection.NATSConn.Close()
+	if err != nil {
+		log.Printf("error during consumer initialization: %s", err)
+		return "hello message"
+	}
 
 	msgs, err := natsConnection.Consumer.Fetch(1)
 	if err != nil {
