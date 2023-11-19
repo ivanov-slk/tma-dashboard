@@ -21,7 +21,7 @@ func TestHandler(t *testing.T) {
 	server.ServeHTTP(resp, req)
 
 	if resp.Body.String() != "stub message" {
-		t.Errorf("incorrect response from handler: got %s, want %s", resp.Body.String(), "hello message")
+		t.Errorf("incorrect response from handler: got %s, want %s", resp.Body.String(), "stub message")
 	}
 
 }
