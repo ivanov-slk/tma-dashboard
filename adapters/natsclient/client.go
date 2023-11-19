@@ -10,6 +10,22 @@ import (
 	"github.com/nats-io/nats.go/jetstream"
 )
 
+type DashboardClient interface {
+	FetchMessage() string
+}
+
+type DashboardNATSClient struct {
+	conn *NATSConnection
+}
+
+func NewDashboardNATSClient() (*DashboardNATSClient, error) {
+	natsConn, err := connectToNATS()
+	if err != nil {
+		return nil, err
+	}
+	return &DashboardNATSClient{conn: &natsConn}, nil
+}
+
 type NATSConnection struct {
 	NATSConn  *nats.Conn
 	Consumer  jetstream.Consumer
@@ -17,28 +33,30 @@ type NATSConnection struct {
 	CancelCtx context.CancelFunc
 }
 
-func FetchMessage() string {
+func (*DashboardNATSClient) FetchMessage() string {
 	// have a NATSConnection with consumer object that can be stubbed for testing?
 	natsConnection, err := connectToNATS()
 	defer natsConnection.CancelCtx()
 	defer natsConnection.NATSConn.Close()
+
+	messageData := ""
 	if err != nil {
-		log.Printf("error during consumer initialization: %s", err)
-		return "hello message"
+		messageData += fmt.Sprintf("error during consumer initialization: %s\n", err)
+		log.Print(messageData)
 	}
 
 	msgs, err := natsConnection.Consumer.Fetch(1)
 	if err != nil {
-		log.Fatalf("failed to fetch messages: %s", err)
+		messageData += fmt.Sprintf("failed to fetch messages: %s\n", err)
+		log.Print(messageData)
 	}
 
-	messageData := "break-the-test-unless-a-message-is-received"
 	for msg := range msgs.Messages() {
 		msg.Ack()
 		messageData = string(msg.Data())
 	}
 	if msgs.Error() != nil {
-		fmt.Println("Error during Fetch(): ", msgs.Error())
+		messageData += fmt.Sprintf("Error during Fetch(): %s\n", msgs.Error())
 	}
 	return messageData
 }
