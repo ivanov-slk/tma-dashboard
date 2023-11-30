@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.1](https://github.com/ivanov-slk/tma-dashboard/compare/v1.1.0...v1.1.1) (2023-11-30)
+
+
+### Refactoring/Restructuring
+
+* Convert the HTTP handler and NATS client to structs, allowing for better modularity and testability. ([dece9ee](https://github.com/ivanov-slk/tma-dashboard/commit/dece9ee93fa5ea15df7a1b6ad3c3b25fdfd76d2d))
+* Move all NATS connection code to a dedicated function, and the connection setup in a dedicated type. ([514382c](https://github.com/ivanov-slk/tma-dashboard/commit/514382c225bec9571a3df8ecce84fd29d19df8e5))
+* Move the NATS part into a dedicated package. ([a55626a](https://github.com/ivanov-slk/tma-dashboard/commit/a55626afff6ae23fb814293d0645e2c34f436b81))
+
 ## [1.1.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.0.0...v1.1.0) (2023-10-20)
 
 
