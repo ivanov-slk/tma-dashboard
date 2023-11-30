@@ -10,6 +10,13 @@ import (
 	"github.com/nats-io/nats.go/jetstream"
 )
 
+type NATSConnection struct {
+	NATSConn  *nats.Conn
+	Consumer  jetstream.Consumer
+	Ctx       context.Context
+	CancelCtx context.CancelFunc
+}
+
 type DashboardClient interface {
 	FetchMessage() string
 }
@@ -24,13 +31,6 @@ func NewDashboardNATSClient() (*DashboardNATSClient, error) {
 		return nil, err
 	}
 	return &DashboardNATSClient{conn: &natsConn}, nil
-}
-
-type NATSConnection struct {
-	NATSConn  *nats.Conn
-	Consumer  jetstream.Consumer
-	Ctx       context.Context
-	CancelCtx context.CancelFunc
 }
 
 func (*DashboardNATSClient) FetchMessage() string {
