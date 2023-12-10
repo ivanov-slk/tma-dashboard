@@ -1,3 +1,5 @@
+// Package natsclient provides functionalities for interacting with a NATS
+// broker for fetching input data.
 package natsclient
 
 import (
@@ -10,6 +12,8 @@ import (
 	"github.com/nats-io/nats.go/jetstream"
 )
 
+// NATSConnection holds the infrastructure concerns regarding the interaction
+// with the NATS broker.
 type NATSConnection struct {
 	NATSConn  *nats.Conn
 	Consumer  jetstream.Consumer
@@ -17,14 +21,19 @@ type NATSConnection struct {
 	CancelCtx context.CancelFunc
 }
 
+// DashboardClient represents the domain-specific API that the service uses
+// when interacting with the data source, hiding any infrastucture concerns.
 type DashboardClient interface {
 	FetchMessage() string
 }
 
+// DashboardNATSClient interacts with a NATS broker for fetching input data.
 type DashboardNATSClient struct {
 	conn *NATSConnection
 }
 
+// NewDashboardNATSClient is a constructor function for creating a
+// connected and operational DashboardNATSClient.
 func NewDashboardNATSClient() (*DashboardNATSClient, error) {
 	natsConn, err := connectToNATS()
 	if err != nil {
@@ -33,19 +42,10 @@ func NewDashboardNATSClient() (*DashboardNATSClient, error) {
 	return &DashboardNATSClient{conn: &natsConn}, nil
 }
 
-func (*DashboardNATSClient) FetchMessage() string {
-	// have a NATSConnection with consumer object that can be stubbed for testing?
-	natsConnection, err := connectToNATS()
-	defer natsConnection.CancelCtx()
-	defer natsConnection.NATSConn.Close()
-
+// FetchMessage fetches a single message from the NATS broker.
+func (d *DashboardNATSClient) FetchMessage() string {
 	messageData := ""
-	if err != nil {
-		messageData += fmt.Sprintf("error during consumer initialization: %s\n", err)
-		log.Print(messageData)
-	}
-
-	msgs, err := natsConnection.Consumer.Fetch(1)
+	msgs, err := d.conn.Consumer.Fetch(1)
 	if err != nil {
 		messageData += fmt.Sprintf("failed to fetch messages: %s\n", err)
 		log.Print(messageData)
