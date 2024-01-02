@@ -12,6 +12,7 @@ type DashboardServer struct {
 	InputChan chan string
 }
 
+// ServeHTTP fetches the most recent message from the input channel of DashboardServer.
 func (d *DashboardServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	messageData := <-d.InputChan
 	fmt.Fprint(w, messageData)
