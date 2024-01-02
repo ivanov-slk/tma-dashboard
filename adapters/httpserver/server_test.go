@@ -16,8 +16,10 @@ func (c *StubNATSClient) FetchMessage() string {
 func TestHandler(t *testing.T) {
 	req, _ := http.NewRequest(http.MethodGet, "/metrics", nil)
 	resp := httptest.NewRecorder()
+	inputChan := make(chan string)
+	go func() { inputChan <- "stub message" }()
 
-	server := &DashboardServer{NATSClient: &StubNATSClient{}}
+	server := &DashboardServer{InputChan: inputChan}
 	server.ServeHTTP(resp, req)
 
 	if resp.Body.String() != "stub message" {

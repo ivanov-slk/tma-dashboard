@@ -4,16 +4,25 @@ import (
 	"log"
 	"net/http"
 
-	dashboard_server "github.com/ivanov-slk/tma-dashboard/adapters/httpserver"
+	"github.com/ivanov-slk/tma-dashboard/adapters/httpserver"
 	"github.com/ivanov-slk/tma-dashboard/adapters/natsclient"
 )
 
 func main() {
-	natsClient, err := natsclient.NewDashboardNATSClient()
-	if err != nil {
-		log.Fatal(err)
-	}
-	if err := http.ListenAndServe(":1337", &dashboard_server.DashboardServer{NATSClient: natsClient}); err != nil {
-		log.Fatal(err)
-	}
+	input_data := make(chan string)
+	go func(c chan string) {
+		natsClient, err := natsclient.NewDashboardNATSClient()
+		if err != nil {
+			log.Fatal(err)
+		}
+		c <- natsClient.FetchMessage()
+	}(input_data)
+
+	go func(c chan string) {
+		if err := http.ListenAndServe(":1337", &httpserver.DashboardServer{InputChan: input_data}); err != nil {
+			log.Fatal(err)
+		}
+	}(input_data)
+
+	select {}
 }
