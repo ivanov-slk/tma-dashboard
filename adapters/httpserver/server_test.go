@@ -6,13 +6,6 @@ import (
 	"testing"
 )
 
-type StubNATSClient struct {
-}
-
-func (c *StubNATSClient) FetchMessage() string {
-	return "stub message"
-}
-
 func TestHandler(t *testing.T) {
 	req, _ := http.NewRequest(http.MethodGet, "/metrics", nil)
 	resp := httptest.NewRecorder()
