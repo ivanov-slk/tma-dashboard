@@ -20,7 +20,7 @@ func main() {
 
 	go func(c chan string) {
 		// TODO: listen and serve with the raw input data channel for now. Later switch to a
-		// presentation layer format as part of other functionality or service.
+		// presentation layer format as part of other functionality or microservice.
 		if err := http.ListenAndServe(":1337", &httpserver.DashboardServer{InputChan: input_data}); err != nil {
 			log.Fatal(err)
 		}
