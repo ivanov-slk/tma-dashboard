@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.2.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.1.1...v1.2.0) (2024-01-03)
+
+
+### Documentation
+
+* Add docstrings for the important objects and packages. ([5935804](https://github.com/ivanov-slk/tma-dashboard/commit/59358045ac677065c193c047ca9db5e0ef2b07e2))
+* Document important behavioral details of the HTTP server. ([64ac0ef](https://github.com/ivanov-slk/tma-dashboard/commit/64ac0ef7786660dd9d0c87511bc493d4a3786bea))
+
+
+### Features
+
+* Make the NATS URI convigurable via the environment variable . ([f6f0530](https://github.com/ivanov-slk/tma-dashboard/commit/f6f05301f0030ed6874b21736d29a6bd99bfc841))
+* The service now parses an input message in the proper format and outputs the supplied temperature. ([c6c57e4](https://github.com/ivanov-slk/tma-dashboard/commit/c6c57e4f3273fcf4974fab91d0c025c4dd27c646))
+
+
+### Refactoring/Restructuring
+
+* Convert the internal channel to array of bytes to avoid unnecessary back-and-forth string conversion. ([f8116ce](https://github.com/ivanov-slk/tma-dashboard/commit/f8116ce727a09c28d8224e765cabff284413d60a))
+* Decouple the HTTP server from the input data source, use channels for internal data transfer. ([f9ccd65](https://github.com/ivanov-slk/tma-dashboard/commit/f9ccd654ed0aee7acb946af7fb942f1ed85e1f1b))
+* Remove unneeded stubs used in the HTTP server tests. ([d863d44](https://github.com/ivanov-slk/tma-dashboard/commit/d863d44980fde0687c30406a142ff49cf3b8513f))
+
 ## [1.1.1](https://github.com/ivanov-slk/tma-dashboard/compare/v1.1.0...v1.1.1) (2023-11-30)
 
 
