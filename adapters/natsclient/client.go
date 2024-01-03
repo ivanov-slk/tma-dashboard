@@ -43,7 +43,7 @@ func NewDashboardNATSClient() (*DashboardNATSClient, error) {
 }
 
 // FetchMessage fetches a single message from the NATS broker.
-func (d *DashboardNATSClient) FetchMessage() string {
+func (d *DashboardNATSClient) FetchMessage() []byte {
 	messageData := ""
 	msgs, err := d.conn.Consumer.Fetch(1)
 	if err != nil {
@@ -58,7 +58,7 @@ func (d *DashboardNATSClient) FetchMessage() string {
 	if msgs.Error() != nil {
 		messageData += fmt.Sprintf("Error during Fetch(): %s\n", msgs.Error())
 	}
-	return messageData
+	return []byte(messageData)
 }
 
 func connectToNATS() (NATSConnection, error) {

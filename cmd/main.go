@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	input_data := make(chan string)
-	go func(c chan string) {
+	input_data := make(chan []byte)
+	go func(c chan []byte) {
 		natsClient, err := natsclient.NewDashboardNATSClient()
 		if err != nil {
 			log.Fatal(err)
@@ -18,7 +18,7 @@ func main() {
 		c <- natsClient.FetchMessage()
 	}(input_data)
 
-	go func(c chan string) {
+	go func(c chan []byte) {
 		// TODO: listen and serve with the raw input data channel for now. Later switch to a
 		// presentation layer format as part of other functionality or microservice.
 		if err := http.ListenAndServe(":1337", &httpserver.DashboardServer{InputChan: input_data}); err != nil {

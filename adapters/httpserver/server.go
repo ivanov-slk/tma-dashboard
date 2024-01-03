@@ -12,7 +12,7 @@ import (
 // DashboardServer is the HTTP server serving the frontend-related content.
 type DashboardServer struct {
 	// move outside at a later stage of refactoring, client and server should be completely uncoupled.
-	InputChan chan string
+	InputChan chan []byte
 }
 
 // ServeHTTP fetches the most recent message from the input channel of DashboardServer.
