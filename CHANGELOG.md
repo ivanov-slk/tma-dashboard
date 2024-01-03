@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/ivanov-slk/tma-dashboard/compare/v1.2.0...v1.2.1) (2024-01-03)
+
+
+### Bug Fixes
+
+* Expect that the NATS stream is already created. The dashboard should not be responsible for creating the stream. ([cc231fc](https://github.com/ivanov-slk/tma-dashboard/commit/cc231fc0dd1cdbc301fe3f6dd776df26763a6f95))
+
 ## [1.2.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.1.1...v1.2.0) (2024-01-03)
 
 
