@@ -13,7 +13,7 @@ func ExtractMetricsSpecification(t testing.TB, extractor MetricsExtractor) {
 		t.Fatalf("failed to extract metrics: %s", err)
 	}
 
-	if got != "hello message" {
-		t.Errorf("did not get correct response from server: got %s, want %s", got, "hello message")
+	if got != "Temperature is 15 degrees Celsius!" {
+		t.Errorf("did not get correct response from server: got %s, want %s", got, "Temperature is 15 degrees Celsius!")
 	}
 }

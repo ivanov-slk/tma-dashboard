@@ -4,6 +4,7 @@ go 1.21.1
 
 require (
 	github.com/docker/go-connections v0.4.0
+	github.com/ivanov-slk/tma-data-generator v1.1.1
 	github.com/nats-io/nats.go v1.30.2
 	github.com/testcontainers/testcontainers-go v0.25.0
 )
