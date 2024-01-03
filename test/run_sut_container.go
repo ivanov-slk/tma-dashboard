@@ -14,13 +14,16 @@ import (
 // RunSUTContainer creates a container of the dashboard service
 // from its Dockerfile and starts it. It is a test helper using a
 // shared context.
-func RunSUTContainer(t testing.TB, ctx context.Context, port string) (*testcontainers.Container, func(), error) {
+func RunSUTContainer(t testing.TB, ctx context.Context, port string, natsServerURI string) (*testcontainers.Container, func(), error) {
 	t.Helper()
 
 	req := testcontainers.ContainerRequest{
 		FromDockerfile: testcontainers.FromDockerfile{
 			Context:       "../",
 			PrintBuildLog: true,
+		},
+		Env: map[string]string{
+			"NATS_SERVER_URI": natsServerURI,
 		},
 		Networks: []string{
 			"test-network",

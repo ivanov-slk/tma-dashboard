@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"github.com/nats-io/nats.go"
@@ -64,7 +65,11 @@ func (d *DashboardNATSClient) FetchMessage() []byte {
 func connectToNATS() (NATSConnection, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
 
-	nc, err := nats.Connect("http://nats-server:4222")
+	natsURI, found := os.LookupEnv("NATS_SERVER_URI")
+	if !found {
+		log.Fatal("ERROR: NATS server URI not set.")
+	}
+	nc, err := nats.Connect(natsURI)
 	if err != nil {
 		log.Printf("failed to connect to nats: %s", err)
 		return NATSConnection{nil, nil, ctx, cancel}, err

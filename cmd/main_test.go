@@ -59,7 +59,7 @@ func TestDashboardServer(t *testing.T) {
 
 	js.Publish(ctx, "generated-data", []byte("{\"temperature\":15,\"humidity\":0.6,\"pressure\":1000,\"datetime\":\"2024-01-04T16:27:40Z\",\"id\":\"1\"}"))
 
-	_, sutCleanup, err := test.RunSUTContainer(t, ctx, "1337")
+	_, sutCleanup, err := test.RunSUTContainer(t, ctx, "1337", "http://nats-server:4222")
 	if err != nil {
 		t.Fatalf("could not initialize sut: %s", err)
 	}
