@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.6](https://github.com/ivanov-slk/tma-dashboard/compare/v1.2.5...v1.2.6) (2024-01-13)
+
+
+### Maintenance
+
+* Add more logging to the server. ([2466e1a](https://github.com/ivanov-slk/tma-dashboard/commit/2466e1a5c8d9d8a1ce2716716eee72eae05c0186))
+
 ## [1.2.5](https://github.com/ivanov-slk/tma-dashboard/compare/v1.2.4...v1.2.5) (2024-01-13)
 
 
