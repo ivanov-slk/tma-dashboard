@@ -85,6 +85,7 @@ func connectToNATS() (NATSConnection, error) {
 	if err != nil {
 		return NATSConnection{nil, nil, ctx, cancel}, err
 	}
+	log.Print("Stream instance initialized.")
 
 	c, err := s.CreateOrUpdateConsumer(ctx, jetstream.ConsumerConfig{
 		Durable:   "TMA",
