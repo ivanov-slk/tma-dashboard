@@ -69,11 +69,14 @@ func connectToNATS() (NATSConnection, error) {
 	if !found {
 		log.Fatal("ERROR: NATS server URI not set.")
 	}
+	log.Printf("The NATS URI is %s.", natsURI)
+
 	nc, err := nats.Connect(natsURI)
 	if err != nil {
 		log.Printf("failed to connect to nats: %s", err)
 		return NATSConnection{nil, nil, ctx, cancel}, err
 	}
+	log.Print("Connection established.")
 
 	js, _ := jetstream.New(nc)
 
@@ -89,6 +92,7 @@ func connectToNATS() (NATSConnection, error) {
 	if err != nil {
 		return NATSConnection{nil, nil, ctx, cancel}, err
 	}
+	log.Print("Consumer created.")
 
 	return NATSConnection{nc, c, ctx, cancel}, nil
 }
