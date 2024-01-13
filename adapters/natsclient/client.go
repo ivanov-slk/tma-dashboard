@@ -75,7 +75,7 @@ func connectToNATS() NATSConnection {
 
 	js, err := jetstream.New(nc)
 	if err != nil {
-		log.Fatalf("ERROR: failed to create jetstream& %s.", err)
+		log.Fatalf("ERROR: failed to create jetstream: %s.", err)
 	}
 
 	s, err := js.Stream(ctx, "TMA")
