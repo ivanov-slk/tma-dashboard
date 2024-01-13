@@ -19,6 +19,10 @@ type DashboardServer struct {
 func (d *DashboardServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	messageData := <-d.InputChan
 	temperatureStats := &generator.TemperatureStats{}
-	json.Unmarshal([]byte(messageData), temperatureStats)
-	fmt.Fprintf(w, "Temperature is %d degrees Celsius!", temperatureStats.Temperature)
+	err := json.Unmarshal([]byte(messageData), temperatureStats)
+	if err != nil {
+		fmt.Fprintf(w, "Error parsing the output: %s. Full message: %s", err, messageData)
+	} else {
+		fmt.Fprintf(w, "Temperature is %d degrees Celsius!", temperatureStats.Temperature)
+	}
 }
