@@ -88,7 +88,7 @@ func connectToNATS() NATSConnection {
 	}
 
 	c, err := s.CreateOrUpdateConsumer(ctx, jetstream.ConsumerConfig{
-		Durable:   "TMA",
+		Durable:   "TMADashboard",
 		AckPolicy: jetstream.AckExplicitPolicy,
 	})
 	if err != nil {
