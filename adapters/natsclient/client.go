@@ -79,6 +79,7 @@ func connectToNATS() (NATSConnection, error) {
 	log.Print("Connection established.")
 
 	js, _ := jetstream.New(nc)
+	log.Print("Jetstream instance created.")
 
 	s, err := js.Stream(ctx, "TMA")
 	if err != nil {
