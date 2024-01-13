@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.4](https://github.com/ivanov-slk/tma-dashboard/compare/v1.2.3...v1.2.4) (2024-01-13)
+
+
+### Maintenance
+
+* Service creates a stream if it has not been previously created. ([d58b3cf](https://github.com/ivanov-slk/tma-dashboard/commit/d58b3cfbce3daf6bcbe277b4ec768ac8ba3e16fc))
+* Service now exits with error immediately in case of errors during connecting to the NATS broker. ([134c4ef](https://github.com/ivanov-slk/tma-dashboard/commit/134c4efce09448772355fbdde0fdd83f2d8ad066))
+
 ## [1.2.3](https://github.com/ivanov-slk/tma-dashboard/compare/v1.2.2...v1.2.3) (2024-01-13)
 
 
