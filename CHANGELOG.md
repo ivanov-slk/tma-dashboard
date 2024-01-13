@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/ivanov-slk/tma-dashboard/compare/v1.2.1...v1.2.2) (2024-01-13)
+
+
+### Maintenance
+
+* Add more logs during connecting to NATS. ([608de51](https://github.com/ivanov-slk/tma-dashboard/commit/608de5161be8e0cf51f1d6d25545e22278572b89))
+
 ## [1.2.1](https://github.com/ivanov-slk/tma-dashboard/compare/v1.2.0...v1.2.1) (2024-01-03)
 
 
