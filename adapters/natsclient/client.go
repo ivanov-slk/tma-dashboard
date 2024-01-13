@@ -81,6 +81,7 @@ func connectToNATS() NATSConnection {
 	s, err := js.CreateStream(ctx, jetstream.StreamConfig{
 		Name:     "TMA",
 		Subjects: []string{"generated-data"},
+		Storage:  jetstream.MemoryStorage,
 	})
 	if err != nil {
 		log.Fatalf("ERROR: failed to initialize stream: %s.", err)

@@ -55,9 +55,13 @@ func TestDashboardServer(t *testing.T) {
 	js.CreateStream(ctx, jetstream.StreamConfig{
 		Name:     "TMA",
 		Subjects: []string{"generated-data"},
+		Storage:  jetstream.MemoryStorage,
 	})
 
-	js.Publish(ctx, "generated-data", []byte("{\"temperature\":15,\"humidity\":0.6,\"pressure\":1000,\"datetime\":\"2024-01-04T16:27:40Z\",\"id\":\"1\"}"))
+	_, err = js.Publish(ctx, "generated-data", []byte("{\"temperature\":15,\"humidity\":0.6,\"pressure\":1000,\"datetime\":\"2024-01-04T16:27:40Z\",\"id\":\"1\"}"))
+	if err != nil {
+		t.Fatalf("failed to produce message %s.", err)
+	}
 
 	_, sutCleanup, err := test.RunSUTContainer(t, ctx, "1337", "http://nats-server:4222")
 	if err != nil {
