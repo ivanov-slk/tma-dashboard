@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.5](https://github.com/ivanov-slk/tma-dashboard/compare/v1.2.4...v1.2.5) (2024-01-13)
+
+
+### Maintenance
+
+* In case invalid message has been fetched, log the error and the message as string, instead of failing silently. ([6067695](https://github.com/ivanov-slk/tma-dashboard/commit/60676955af028fbcea8ab76f0996fa1c30fd9469))
+
+
+### Bug Fixes
+
+* Explicitly use jetstream.MemoryStorage during stream creation. This is sufficient for the current purposes of the service. ([14e6d2a](https://github.com/ivanov-slk/tma-dashboard/commit/14e6d2ad66542eecc65afef4d84c867565aa0dd0))
+
 ## [1.2.4](https://github.com/ivanov-slk/tma-dashboard/compare/v1.2.3...v1.2.4) (2024-01-13)
 
 
