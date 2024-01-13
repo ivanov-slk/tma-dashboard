@@ -36,10 +36,7 @@ type DashboardNATSClient struct {
 // NewDashboardNATSClient is a constructor function for creating a
 // connected and operational DashboardNATSClient.
 func NewDashboardNATSClient() (*DashboardNATSClient, error) {
-	natsConn, err := connectToNATS()
-	if err != nil {
-		return nil, err
-	}
+	natsConn := connectToNATS()
 	return &DashboardNATSClient{conn: &natsConn}, nil
 }
 
@@ -62,7 +59,7 @@ func (d *DashboardNATSClient) FetchMessage() []byte {
 	return []byte(messageData)
 }
 
-func connectToNATS() (NATSConnection, error) {
+func connectToNATS() NATSConnection {
 	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
 
 	natsURI, found := os.LookupEnv("NATS_SERVER_URI")
@@ -73,28 +70,26 @@ func connectToNATS() (NATSConnection, error) {
 
 	nc, err := nats.Connect(natsURI)
 	if err != nil {
-		log.Printf("failed to connect to nats: %s", err)
-		return NATSConnection{nil, nil, ctx, cancel}, err
+		log.Fatalf("failed to connect to nats: %s.", err)
 	}
-	log.Print("Connection established.")
 
-	js, _ := jetstream.New(nc)
-	log.Print("Jetstream instance created.")
+	js, err := jetstream.New(nc)
+	if err != nil {
+		log.Fatalf("ERROR: failed to create jetstream& %s.", err)
+	}
 
 	s, err := js.Stream(ctx, "TMA")
 	if err != nil {
-		return NATSConnection{nil, nil, ctx, cancel}, err
+		log.Fatalf("ERROR: failed to initialize stream: %s.", err)
 	}
-	log.Print("Stream instance initialized.")
 
 	c, err := s.CreateOrUpdateConsumer(ctx, jetstream.ConsumerConfig{
 		Durable:   "TMA",
 		AckPolicy: jetstream.AckExplicitPolicy,
 	})
 	if err != nil {
-		return NATSConnection{nil, nil, ctx, cancel}, err
+		log.Fatalf("ERROR: failed to initialize consumer: %s.", err)
 	}
-	log.Print("Consumer created.")
 
-	return NATSConnection{nc, c, ctx, cancel}, nil
+	return NATSConnection{nc, c, ctx, cancel}
 }
