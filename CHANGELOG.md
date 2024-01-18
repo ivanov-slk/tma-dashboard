@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.2.6...v1.3.0) (2024-01-18)
+
+
+### Features
+
+* Messages that produce error are logged to stdout instead of being returned to the user. Instead, the last valid message is returned by the handler. ([d56c62d](https://github.com/ivanov-slk/tma-dashboard/commit/d56c62d89c0786d9ca28828060d4a51528cfadd9))
+
 ## [1.2.6](https://github.com/ivanov-slk/tma-dashboard/compare/v1.2.5...v1.2.6) (2024-01-13)
 
 
