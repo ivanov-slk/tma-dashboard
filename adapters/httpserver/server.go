@@ -12,19 +12,29 @@ import (
 
 // DashboardServer is the HTTP server serving the frontend-related content.
 type DashboardServer struct {
-	InputChan chan []byte
+	InputChan       chan []byte
+	lastFetchedData []byte
 }
 
 // ServeHTTP fetches the most recent message from the input channel of DashboardServer.
 func (d *DashboardServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	messageData := <-d.InputChan
+
+	if messageData == nil {
+		messageData = d.lastFetchedData
+	}
+
 	slog.Info("Message fetched from channel:", "messageData", messageData) // TODO align logging - slog or log or fmt ...
 	temperatureStats := &generator.TemperatureStats{}
 	err := json.Unmarshal([]byte(messageData), temperatureStats)
 	slog.Info("JSON parsing done.")
 	if err != nil {
-		fmt.Fprintf(w, "Error parsing the output: %s. Full message: %s", err, messageData)
+		slog.Warn("Message parsing resulted in an error:", "error", err, "message", messageData)
+		temperatureStats = &generator.TemperatureStats{}
+		json.Unmarshal([]byte(d.lastFetchedData), temperatureStats)
+		fmt.Fprintf(w, "Temperature is %d degrees Celsius!", temperatureStats.Temperature)
 	} else {
+		d.lastFetchedData = messageData
 		fmt.Fprintf(w, "Temperature is %d degrees Celsius!", temperatureStats.Temperature)
 	}
 }
