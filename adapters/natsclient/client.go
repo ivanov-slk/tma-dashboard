@@ -42,6 +42,9 @@ func NewDashboardNATSClient() (*DashboardNATSClient, error) {
 	return &DashboardNATSClient{conn: &natsConn}, nil
 }
 
+// Consume is an adapter of jetstream.Consumer.Consume. It takes a channel as input,
+// fetches NATS messages using the NATS connections, and sends them to the channel
+// for further processing.
 func (d *DashboardNATSClient) Consume(out chan []byte) {
 	cc, err := d.conn.Consumer.Consume(func(msg jetstream.Msg) {
 		out <- msg.Data()
