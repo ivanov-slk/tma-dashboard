@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/nats-io/nats.go"
@@ -40,23 +42,21 @@ func NewDashboardNATSClient() (*DashboardNATSClient, error) {
 	return &DashboardNATSClient{conn: &natsConn}, nil
 }
 
-// FetchMessage fetches a single message from the NATS broker.
-func (d *DashboardNATSClient) FetchMessage() []byte {
-	messageData := ""
-	msgs, err := d.conn.Consumer.Fetch(1)
-	if err != nil {
-		messageData += fmt.Sprintf("failed to fetch messages: %s\n", err)
-		log.Print(messageData)
-	}
-
-	for msg := range msgs.Messages() {
+func (d *DashboardNATSClient) Consume(out chan []byte) {
+	cc, err := d.conn.Consumer.Consume(func(msg jetstream.Msg) {
+		out <- msg.Data()
 		msg.Ack()
-		messageData = string(msg.Data())
+	}, jetstream.ConsumeErrHandler(func(consumeCtx jetstream.ConsumeContext, err error) {
+		fmt.Printf("failed to consume a message: %s", err)
+	}))
+	if err != nil {
+		log.Fatalf("failed to start consuming: %s", err)
 	}
-	if msgs.Error() != nil {
-		messageData += fmt.Sprintf("Error during Fetch(): %s\n", msgs.Error())
-	}
-	return []byte(messageData)
+	defer cc.Stop()
+
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
+	<-sig
 }
 
 func connectToNATS() NATSConnection {

@@ -13,9 +13,9 @@ func main() {
 	go func(c chan []byte) {
 		natsClient, err := natsclient.NewDashboardNATSClient()
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalf("failed to initialize NATS client: %s", err)
 		}
-		c <- natsClient.FetchMessage()
+		natsClient.Consume(c)
 	}(input_data)
 
 	go func(c chan []byte) {
