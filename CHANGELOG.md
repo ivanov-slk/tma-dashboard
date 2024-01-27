@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/ivanov-slk/tma-dashboard/compare/v1.3.0...v1.3.1) (2024-01-20)
+
+
+### Refactoring/Restructuring
+
+* Continuously consume messages and send them to the internal channel. ([070ef79](https://github.com/ivanov-slk/tma-dashboard/commit/070ef795636e42f57882ff3dba35ead3387a3167))
+
 ## [1.3.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.2.6...v1.3.0) (2024-01-18)
 
 ### Features
