@@ -19,12 +19,12 @@ type DashboardServer struct {
 // ServeHTTP fetches the most recent message from the input channel of DashboardServer.
 func (d *DashboardServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	messageData := <-d.InputChan
+	slog.Info("Message fetched from channel:", "messageData", messageData) // TODO align logging - slog or log or fmt ...
 
 	if messageData == nil {
 		messageData = d.lastFetchedData
 	}
 
-	slog.Info("Message fetched from channel:", "messageData", messageData) // TODO align logging - slog or log or fmt ...
 	temperatureStats := &generator.TemperatureStats{}
 	err := json.Unmarshal([]byte(messageData), temperatureStats)
 	slog.Info("JSON parsing done.")
