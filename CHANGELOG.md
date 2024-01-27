@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.2](https://github.com/ivanov-slk/tma-dashboard/compare/v1.3.1...v1.3.2) (2024-01-27)
+
+
+### Maintenance
+
+* Show log for accepted message before the nil check. ([c167f2e](https://github.com/ivanov-slk/tma-dashboard/commit/c167f2e026c89db5807c91a1497741befe1b4f34))
+
+
+### Documentation
+
+* Add documentation for the continuous consumer. ([fb4607a](https://github.com/ivanov-slk/tma-dashboard/commit/fb4607a30462420bc60aed766dc24d8450bec757))
+
 ## [1.3.1](https://github.com/ivanov-slk/tma-dashboard/compare/v1.3.0...v1.3.1) (2024-01-20)
 
 
