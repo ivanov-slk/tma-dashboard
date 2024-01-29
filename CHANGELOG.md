@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.3.2...v1.4.0) (2024-01-29)
+
+
+### Features
+
+* The server now correctly handles timeouts during fetching a message from NATS and defaults to the last valid message. ([dbba89e](https://github.com/ivanov-slk/tma-dashboard/commit/dbba89ed44a84c4a1c1182c3984d945701770efc))
+
 ## [1.3.2](https://github.com/ivanov-slk/tma-dashboard/compare/v1.3.1...v1.3.2) (2024-01-27)
 
 
