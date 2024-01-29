@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"time"
 
 	"github.com/ivanov-slk/tma-data-generator/pkg/generator"
 )
@@ -18,11 +19,13 @@ type DashboardServer struct {
 
 // ServeHTTP fetches the most recent message from the input channel of DashboardServer.
 func (d *DashboardServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	messageData := <-d.InputChan
-	slog.Info("Message fetched from channel:", "messageData", messageData) // TODO align logging - slog or log or fmt ...
-
-	if messageData == nil {
-		messageData = d.lastFetchedData
+	messageData := d.lastFetchedData
+	select {
+	case mes := <-d.InputChan:
+		messageData = mes
+		slog.Info("Message fetched from channel:", "messageData", messageData) // TODO align logging - slog or log or fmt ...
+	case <-time.After(1 * time.Second):
+		slog.Info("Timed out waiting for message. Using the last valid one.")
 	}
 
 	temperatureStats := &generator.TemperatureStats{}
