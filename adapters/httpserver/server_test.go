@@ -1,11 +1,13 @@
 package httpserver
 
 import (
-	"log"
+	"log/slog"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 	"time"
+
+	approvals "github.com/approvals/go-approval-tests"
 )
 
 func TestHandler(t *testing.T) {
@@ -14,15 +16,13 @@ func TestHandler(t *testing.T) {
 		resp := httptest.NewRecorder()
 		inputChan := make(chan []byte)
 		inputMsg := "{\"temperature\":15,\"humidity\":0.6,\"pressure\":1000,\"datetime\":\"2024-01-04T16:27:40Z\",\"id\":\"1\"}"
-		expectedResp := "Temperature is 15 degrees Celsius!"
+
 		go func() { inputChan <- []byte(inputMsg) }()
 
 		server := &DashboardServer{InputChan: inputChan}
 		server.ServeHTTP(resp, req)
 
-		if resp.Body.String() != expectedResp {
-			t.Errorf("incorrect response from handler: got %s, want %s", resp.Body.String(), expectedResp)
-		}
+		approvals.VerifyString(t, resp.Body.String())
 	})
 
 	t.Run("temperature is 20", func(t *testing.T) {
@@ -30,15 +30,12 @@ func TestHandler(t *testing.T) {
 		resp := httptest.NewRecorder()
 		inputChan := make(chan []byte)
 		inputMsg := "{\"temperature\":20,\"humidity\":0.6,\"pressure\":1000,\"datetime\":\"2024-01-04T16:27:40Z\",\"id\":\"1\"}"
-		expectedResp := "Temperature is 20 degrees Celsius!"
 		go func() { inputChan <- []byte(inputMsg) }()
 
 		server := &DashboardServer{InputChan: inputChan}
 		server.ServeHTTP(resp, req)
 
-		if resp.Body.String() != expectedResp {
-			t.Errorf("incorrect response from handler: got %s, want %s", resp.Body.String(), expectedResp)
-		}
+		approvals.VerifyString(t, resp.Body.String())
 	})
 
 	t.Run("server stashes last non-none message and returns it if the most recent is none", func(t *testing.T) {
@@ -46,23 +43,18 @@ func TestHandler(t *testing.T) {
 		resp := httptest.NewRecorder()
 		inputChan := make(chan []byte)
 		inputMsg := "{\"temperature\":20,\"humidity\":0.6,\"pressure\":1000,\"datetime\":\"2024-01-04T16:27:40Z\",\"id\":\"1\"}"
-		expectedResp := "Temperature is 20 degrees Celsius!"
 		go func() { inputChan <- []byte(inputMsg); inputChan <- nil }()
 
 		server := &DashboardServer{InputChan: inputChan}
 		server.ServeHTTP(resp, req)
 
-		if resp.Body.String() != expectedResp {
-			t.Fatalf("incorrect response from handler: got %s, want %s", resp.Body.String(), expectedResp)
-		}
+		approvals.VerifyString(t, resp.Body.String())
 
 		req, _ = http.NewRequest(http.MethodGet, "/metrics", nil)
 		resp = httptest.NewRecorder()
 		server.ServeHTTP(resp, req)
 
-		if resp.Body.String() != expectedResp {
-			t.Errorf("incorrect response from handler: got %s, want %s", resp.Body.String(), expectedResp)
-		}
+		approvals.VerifyString(t, resp.Body.String())
 	})
 
 	t.Run("server stashes last non-none message and returns it if the most recent produces an error", func(t *testing.T) {
@@ -71,57 +63,52 @@ func TestHandler(t *testing.T) {
 		inputChan := make(chan []byte)
 		inputMsg := "{\"temperature\":20,\"humidity\":0.6,\"pressure\":1000,\"datetime\":\"2024-01-04T16:27:40Z\",\"id\":\"1\"}"
 		inputMsgErr := "{this-is-unmarshalling-error}"
-		expectedResp := "Temperature is 20 degrees Celsius!"
 		go func() { inputChan <- []byte(inputMsg); inputChan <- []byte(inputMsgErr) }()
 
 		server := &DashboardServer{InputChan: inputChan}
 		server.ServeHTTP(resp, req)
 
-		if resp.Body.String() != expectedResp {
-			t.Fatalf("incorrect response from handler: got %s, want %s", resp.Body.String(), expectedResp)
-		}
+		approvals.VerifyString(t, resp.Body.String())
 
 		req, _ = http.NewRequest(http.MethodGet, "/metrics", nil)
 		resp = httptest.NewRecorder()
 		server.ServeHTTP(resp, req)
 
-		if resp.Body.String() != expectedResp {
-			t.Errorf("incorrect response from handler: got %s, want %s", resp.Body.String(), expectedResp)
-		}
+		approvals.VerifyString(t, resp.Body.String())
 	})
 
 	t.Run("server timeouts after 1 second and returns last message if no message is receved from channel", func(t *testing.T) {
 		timeout := time.After(3 * time.Second)
-		done := make(chan bool)
+		testOutput := make(chan httptest.ResponseRecorder)
 		go func(t testing.TB) {
 			req, _ := http.NewRequest(http.MethodGet, "/metrics", nil)
 			resp := httptest.NewRecorder()
 			inputChan := make(chan []byte)
-			inputMsg := "{\"temperature\":20,\"humidity\":0.6,\"pressure\":1000,\"datetime\":\"2024-01-04T16:27:40Z\",\"id\":\"1\"}"
-			expectedResp := "Temperature is 20 degrees Celsius!"
+			inputMsg := "{\"temperature\":25,\"humidity\":0.6,\"pressure\":1000,\"datetime\":\"2024-01-04T16:27:40Z\",\"id\":\"1\"}"
 			go func() { inputChan <- []byte(inputMsg) }()
 
 			server := &DashboardServer{InputChan: inputChan}
 			server.ServeHTTP(resp, req)
 
-			if resp.Body.String() != expectedResp {
-				log.Fatalf("incorrect response from handler: got %s, want %s", resp.Body.String(), expectedResp)
-			}
+			testOutput <- *resp
 
 			req, _ = http.NewRequest(http.MethodGet, "/metrics", nil)
 			resp = httptest.NewRecorder()
 			server.ServeHTTP(resp, req)
 
-			if resp.Body.String() != expectedResp {
-				log.Fatalf("incorrect response from handler: got %s, want %s", resp.Body.String(), expectedResp)
-			}
-			done <- true
+			testOutput <- *resp
 		}(t)
 
-		select {
-		case <-timeout:
-			t.Fatal("Test didn't finish in time")
-		case <-done:
+		for i := 0; i < 2; i++ {
+			// Ugly, but need to fetch output twice before the timeout.
+			select {
+			case <-timeout:
+				t.Fatal("The test didn't finish in time.")
+			case resp := <-testOutput:
+
+				approvals.VerifyString(t, resp.Body.String())
+				slog.Info("here")
+			}
 		}
 	})
 }

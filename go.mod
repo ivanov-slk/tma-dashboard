@@ -3,6 +3,7 @@ module github.com/ivanov-slk/tma-dashboard
 go 1.21.1
 
 require (
+	github.com/approvals/go-approval-tests v0.0.0-20220530063708-32d5677069bd
 	github.com/docker/go-connections v0.4.0
 	github.com/ivanov-slk/tma-data-generator v1.1.1
 	github.com/nats-io/nats.go v1.30.2

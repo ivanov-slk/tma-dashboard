@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>The temperature dashboard</title>
+    <meta charset="UTF-8"/>
+    <meta name="description" content="The temperature dashboard" lang="en"/>
+</head>
+<body>
+<main>
+<h1>Temperature statistics for 2024-01-04 16:27:40 &#43;0000 UTC at 1:</h1>
+<ul>
+<p>Temperature is 15 degrees Celsius.</p>
+<p>Pressure is 1000 hPa.</p>
+<p>Humidity is 0.6%.</p>
+</ul>
+</main>
+<footer>
+    <ul>
+        <li><a href="https://github.com/ivanov-slk/tma-dashboard">GitHub</a></li>
+    </ul>
+</footer>
+</body>
+</html>
