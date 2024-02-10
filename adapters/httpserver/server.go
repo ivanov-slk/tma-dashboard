@@ -2,13 +2,19 @@
 package httpserver
 
 import (
+	"embed"
 	"encoding/json"
-	"fmt"
+	"html/template"
 	"log/slog"
 	"net/http"
 	"time"
 
 	"github.com/ivanov-slk/tma-data-generator/pkg/generator"
+)
+
+var (
+	//go:embed "templates/*"
+	dashboardTemplates embed.FS
 )
 
 // DashboardServer is the HTTP server serving the frontend-related content.
@@ -35,9 +41,20 @@ func (d *DashboardServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		slog.Warn("Message parsing resulted in an error:", "error", err, "message", messageData)
 		temperatureStats = &generator.TemperatureStats{}
 		json.Unmarshal([]byte(d.lastFetchedData), temperatureStats)
-		fmt.Fprintf(w, "Temperature is %d degrees Celsius!", temperatureStats.Temperature)
 	} else {
 		d.lastFetchedData = messageData
-		fmt.Fprintf(w, "Temperature is %d degrees Celsius!", temperatureStats.Temperature)
 	}
+
+	templ, _ := template.ParseFS(dashboardTemplates, "templates/*.gohtml")
+	// TODO: add error handling
+	templ.Execute(w, temperatureStats)
+	//	if err != nil {
+	//		return err
+	//	}
+	//
+	// ​
+	//
+	//	if err := templ.Execute(w, temperatureStats); err != nil {
+	//		return err
+	//	}
 }
