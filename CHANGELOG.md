@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.5.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.4.0...v1.5.0) (2024-02-10)
+
+
+### Maintenance
+
+* Add debug files from go-approval-tests to gitignore. ([fe8dc53](https://github.com/ivanov-slk/tma-dashboard/commit/fe8dc53a9def1dfb796aa8a667209bf7b3284687))
+
+
+### Features
+
+* Return HTML template from the server, instead of plain text. ([b65e565](https://github.com/ivanov-slk/tma-dashboard/commit/b65e5654731a674c2a6a83af0cfd5a9c5d7b830a))
+
+
+### Testing
+
+* Use go approvals for the templates in the HTTP server testing suite. ([3bc82b7](https://github.com/ivanov-slk/tma-dashboard/commit/3bc82b79195025911bef9d1fd2721194c7faf3bf))
+
 ## [1.4.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.3.2...v1.4.0) (2024-01-29)
 
 
