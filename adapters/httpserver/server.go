@@ -46,15 +46,5 @@ func (d *DashboardServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	templ, _ := template.ParseFS(dashboardTemplates, "templates/*.gohtml")
-	// TODO: add error handling
 	templ.Execute(w, temperatureStats)
-	//	if err != nil {
-	//		return err
-	//	}
-	//
-	// ​
-	//
-	//	if err := templ.Execute(w, temperatureStats); err != nil {
-	//		return err
-	//	}
 }
