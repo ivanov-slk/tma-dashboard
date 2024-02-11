@@ -25,6 +25,14 @@ type DashboardServer struct {
 
 // ServeHTTP fetches the most recent message from the input channel of DashboardServer.
 func (d *DashboardServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	messageData := d.fetchMessage()
+	temperatureStats := d.parseMessage(messageData)
+
+	templ, _ := template.ParseFS(dashboardTemplates, "templates/*.gohtml")
+	templ.Execute(w, temperatureStats)
+}
+
+func (d *DashboardServer) fetchMessage() []byte {
 	messageData := d.lastFetchedData
 	select {
 	case mes := <-d.InputChan:
@@ -33,7 +41,10 @@ func (d *DashboardServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	case <-time.After(1 * time.Second):
 		slog.Info("Timed out waiting for message. Using the last valid one.")
 	}
+	return messageData
+}
 
+func (d *DashboardServer) parseMessage(messageData []byte) *generator.TemperatureStats {
 	temperatureStats := &generator.TemperatureStats{}
 	err := json.Unmarshal([]byte(messageData), temperatureStats)
 	slog.Info("JSON parsing done.")
@@ -44,7 +55,5 @@ func (d *DashboardServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	} else {
 		d.lastFetchedData = messageData
 	}
-
-	templ, _ := template.ParseFS(dashboardTemplates, "templates/*.gohtml")
-	templ.Execute(w, temperatureStats)
+	return temperatureStats
 }
