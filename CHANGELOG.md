@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/ivanov-slk/tma-dashboard/compare/v1.5.0...v1.5.1) (2024-02-11)
+
+
+### Bug Fixes
+
+* Add missing template files. ([e68f08d](https://github.com/ivanov-slk/tma-dashboard/commit/e68f08dabf902b4239369086d548cf7e6895c130))
+
 ## [1.5.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.4.0...v1.5.0) (2024-02-10)
 
 
