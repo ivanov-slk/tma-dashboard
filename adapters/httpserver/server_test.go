@@ -122,4 +122,18 @@ func TestMetricsHandler(t *testing.T) {
 
 		approvals.VerifyString(t, resp.Body.String())
 	})
+
+	t.Run("should render zeroes when no valid messages found on channel", func(t *testing.T) {
+		req, _ := http.NewRequest(http.MethodGet, "/metrics", nil)
+		resp := httptest.NewRecorder()
+		inputChan := make(chan []byte)
+		inputMsg := "{this-is-unmarshalling-error}"
+
+		go func() { inputChan <- []byte(inputMsg) }()
+
+		server := &DashboardServer{InputChan: inputChan}
+		server.ServeHTTP(resp, req)
+
+		approvals.VerifyString(t, resp.Body.String())
+	})
 }
