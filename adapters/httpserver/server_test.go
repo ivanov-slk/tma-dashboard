@@ -111,4 +111,15 @@ func TestMetricsHandler(t *testing.T) {
 			}
 		}
 	})
+
+	t.Run("should render zeroes when no messages found on channel", func(t *testing.T) {
+		req, _ := http.NewRequest(http.MethodGet, "/metrics", nil)
+		resp := httptest.NewRecorder()
+		inputChan := make(chan []byte)
+
+		server := &DashboardServer{InputChan: inputChan}
+		server.ServeHTTP(resp, req)
+
+		approvals.VerifyString(t, resp.Body.String())
+	})
 }
