@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/ivanov-slk/tma-dashboard/compare/v1.5.1...v1.5.2) (2024-02-11)
+
+
+### Refactoring/Restructuring
+
+* Split ServeHTTP into separate methods for better readability and maintainability. ([318a09d](https://github.com/ivanov-slk/tma-dashboard/commit/318a09dfc74ce58cc72458bd38664b85eeaedef7))
+
 ## [1.5.1](https://github.com/ivanov-slk/tma-dashboard/compare/v1.5.0...v1.5.1) (2024-02-11)
 
 
