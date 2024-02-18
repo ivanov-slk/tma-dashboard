@@ -19,7 +19,7 @@ func TestMetricsHandler(t *testing.T) {
 
 		go func() { inputChan <- []byte(inputMsg) }()
 
-		server := &DashboardServer{InputChan: inputChan}
+		server := NewDashboardServer(inputChan)
 		server.ServeHTTP(resp, req)
 
 		approvals.VerifyString(t, resp.Body.String())
@@ -32,7 +32,7 @@ func TestMetricsHandler(t *testing.T) {
 		inputMsg := "{\"temperature\":20,\"humidity\":0.6,\"pressure\":1000,\"datetime\":\"2024-01-04T16:27:40Z\",\"id\":\"1\"}"
 		go func() { inputChan <- []byte(inputMsg) }()
 
-		server := &DashboardServer{InputChan: inputChan}
+		server := NewDashboardServer(inputChan)
 		server.ServeHTTP(resp, req)
 
 		approvals.VerifyString(t, resp.Body.String())
@@ -45,7 +45,7 @@ func TestMetricsHandler(t *testing.T) {
 		inputMsg := "{\"temperature\":20,\"humidity\":0.6,\"pressure\":1000,\"datetime\":\"2024-01-04T16:27:40Z\",\"id\":\"1\"}"
 		go func() { inputChan <- []byte(inputMsg); inputChan <- nil }()
 
-		server := &DashboardServer{InputChan: inputChan}
+		server := NewDashboardServer(inputChan)
 		server.ServeHTTP(resp, req)
 
 		approvals.VerifyString(t, resp.Body.String())
@@ -65,7 +65,7 @@ func TestMetricsHandler(t *testing.T) {
 		inputMsgErr := "{this-is-unmarshalling-error}"
 		go func() { inputChan <- []byte(inputMsg); inputChan <- []byte(inputMsgErr) }()
 
-		server := &DashboardServer{InputChan: inputChan}
+		server := NewDashboardServer(inputChan)
 		server.ServeHTTP(resp, req)
 
 		approvals.VerifyString(t, resp.Body.String())
@@ -87,7 +87,7 @@ func TestMetricsHandler(t *testing.T) {
 			inputMsg := "{\"temperature\":25,\"humidity\":0.6,\"pressure\":1000,\"datetime\":\"2024-01-04T16:27:40Z\",\"id\":\"1\"}"
 			go func() { inputChan <- []byte(inputMsg) }()
 
-			server := &DashboardServer{InputChan: inputChan}
+			server := NewDashboardServer(inputChan)
 			server.ServeHTTP(resp, req)
 
 			testOutput <- *resp
@@ -117,7 +117,7 @@ func TestMetricsHandler(t *testing.T) {
 		resp := httptest.NewRecorder()
 		inputChan := make(chan []byte)
 
-		server := &DashboardServer{InputChan: inputChan}
+		server := NewDashboardServer(inputChan)
 		server.ServeHTTP(resp, req)
 
 		approvals.VerifyString(t, resp.Body.String())
@@ -131,7 +131,7 @@ func TestMetricsHandler(t *testing.T) {
 
 		go func() { inputChan <- []byte(inputMsg) }()
 
-		server := &DashboardServer{InputChan: inputChan}
+		server := NewDashboardServer(inputChan)
 		server.ServeHTTP(resp, req)
 
 		approvals.VerifyString(t, resp.Body.String())
@@ -144,7 +144,7 @@ func TestWelcomeHandler(t *testing.T) {
 		resp := httptest.NewRecorder()
 		inputChan := make(chan []byte)
 
-		server := &DashboardServer{InputChan: inputChan}
+		server := NewDashboardServer(inputChan)
 		server.ServeHTTP(resp, req)
 
 		approvals.VerifyString(t, resp.Body.String())

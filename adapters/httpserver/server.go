@@ -17,18 +17,24 @@ var (
 	dashboardTemplates embed.FS
 )
 
+// NewDashboardServer initializes a Dashboard HTTP server using the provided inputChan.
+func NewDashboardServer(inputChan chan []byte) *DashboardServer {
+	d := &DashboardServer{InputChan: inputChan, router: http.NewServeMux()}
+	d.router.Handle("/", http.HandlerFunc(d.renderWelcome))
+	d.router.Handle("/metrics", http.HandlerFunc(d.renderMetrics))
+	return d
+}
+
 // DashboardServer is the HTTP server serving the frontend-related content.
 type DashboardServer struct {
 	InputChan       chan []byte
+	router          *http.ServeMux
 	lastFetchedData []byte
 }
 
 // ServeHTTP fetches the most recent message from the input channel of DashboardServer.
 func (d *DashboardServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	router := http.NewServeMux()
-	router.Handle("/", http.HandlerFunc(d.renderWelcome))
-	router.Handle("/metrics", http.HandlerFunc(d.renderMetrics))
-	router.ServeHTTP(w, r)
+	d.router.ServeHTTP(w, r)
 }
 
 func (d *DashboardServer) fetchMessage() []byte {
