@@ -25,14 +25,25 @@ type DashboardServer struct {
 
 // ServeHTTP fetches the most recent message from the input channel of DashboardServer.
 func (d *DashboardServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	messageData := d.fetchMessage()
-	temperatureStats := d.parseMessage(messageData)
+	router := http.NewServeMux()
+	router.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		templ, _ := template.ParseFS(dashboardTemplates, "templates/*.gohtml")
+		err := templ.ExecuteTemplate(w, "welcome.gohtml", nil)
+		if err != nil {
+			slog.Error("Error parsing the templates.", "error", err)
+		}
+	}))
+	router.Handle("/metrics", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		messageData := d.fetchMessage()
+		temperatureStats := d.parseMessage(messageData)
 
-	templ, _ := template.ParseFS(dashboardTemplates, "templates/*.gohtml")
-	err := templ.ExecuteTemplate(w, "main.gohtml", temperatureStats)
-	if err != nil {
-		slog.Error("Error parsing the templates.", "error", err)
-	}
+		templ, _ := template.ParseFS(dashboardTemplates, "templates/*.gohtml")
+		err := templ.ExecuteTemplate(w, "main.gohtml", temperatureStats)
+		if err != nil {
+			slog.Error("Error parsing the templates.", "error", err)
+		}
+	}))
+	router.ServeHTTP(w, r)
 }
 
 func (d *DashboardServer) fetchMessage() []byte {

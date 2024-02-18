@@ -11,12 +11,8 @@
 <body>
 <main>
 
-<h1>Temperature statistics for 0001-01-01 00:00:00 &#43;0000 UTC at :</h1>
-<ul>
-<p>Temperature is 0 degrees Celsius.</p>
-<p>Pressure is 0 hPa.</p>
-<p>Humidity is 0%.</p>
-</ul>
+<h1>Welcome to the Temperature dashboard!</h1>
+<p>Go to /metrics to see the latest metrics.</p>
 
 </main>
 <footer>

@@ -137,3 +137,16 @@ func TestMetricsHandler(t *testing.T) {
 		approvals.VerifyString(t, resp.Body.String())
 	})
 }
+
+func TestWelcomeHandler(t *testing.T) {
+	t.Run("should display welcome page", func(t *testing.T) {
+		req, _ := http.NewRequest(http.MethodGet, "/", nil)
+		resp := httptest.NewRecorder()
+		inputChan := make(chan []byte)
+
+		server := &DashboardServer{InputChan: inputChan}
+		server.ServeHTTP(resp, req)
+
+		approvals.VerifyString(t, resp.Body.String())
+	})
+}
