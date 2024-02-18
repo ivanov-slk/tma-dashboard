@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.6.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.5.2...v1.6.0) (2024-02-18)
+
+
+### Features
+
+* Add a welcome page. ([91f656b](https://github.com/ivanov-slk/tma-dashboard/commit/91f656b40a9ee337de3ccc60c35f2ee4ec4bccf9))
+
+
+### Refactoring/Restructuring
+
+* Split the HTML template into multiple modularized sub-templates. ([d350caf](https://github.com/ivanov-slk/tma-dashboard/commit/d350caf2acaacdf54cd4b14f7c344822a193259c))
+
+
+### Testing
+
+* Add a test to ensure that zeroes are displayed if only unmarshable messages have been processed. ([0e42b89](https://github.com/ivanov-slk/tma-dashboard/commit/0e42b898ec3a1b30fb7bd630457629bbbced8d7a))
+* Add a test to ensure that zeroes are displayed when the channel is empty and no previous valid messages have been received. ([8a60fc3](https://github.com/ivanov-slk/tma-dashboard/commit/8a60fc3c3a896553a618f8afa6cdb7a81b92f037))
+
 ## [1.5.2](https://github.com/ivanov-slk/tma-dashboard/compare/v1.5.1...v1.5.2) (2024-02-11)
 
 
