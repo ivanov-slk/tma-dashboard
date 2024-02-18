@@ -10,7 +10,7 @@ import (
 	approvals "github.com/approvals/go-approval-tests"
 )
 
-func TestHandler(t *testing.T) {
+func TestMetricsHandler(t *testing.T) {
 	t.Run("temperature is 15", func(t *testing.T) {
 		req, _ := http.NewRequest(http.MethodGet, "/metrics", nil)
 		resp := httptest.NewRecorder()

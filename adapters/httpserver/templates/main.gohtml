@@ -1,23 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>The temperature dashboard</title>
-    <meta charset="UTF-8"/>
-    <meta name="description" content="The temperature dashboard" lang="en"/>
-</head>
-<body>
-<main>
+{{template "top" .}}
 <h1>Temperature statistics for {{.Datetime}} at {{.Id}}:</h1>
 <ul>
 <p>Temperature is {{.Temperature}} degrees Celsius.</p>
 <p>Pressure is {{.Pressure}} hPa.</p>
 <p>Humidity is {{.Humidity}}%.</p>
 </ul>
-</main>
-<footer>
-    <ul>
-        <li><a href="https://github.com/ivanov-slk/tma-dashboard">GitHub</a></li>
-    </ul>
-</footer>
-</body>
-</html>
+{{template "bottom" .}}

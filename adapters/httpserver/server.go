@@ -29,7 +29,10 @@ func (d *DashboardServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	temperatureStats := d.parseMessage(messageData)
 
 	templ, _ := template.ParseFS(dashboardTemplates, "templates/*.gohtml")
-	templ.Execute(w, temperatureStats)
+	err := templ.ExecuteTemplate(w, "main.gohtml", temperatureStats)
+	if err != nil {
+		slog.Error("Error parsing the templates.", "error", err)
+	}
 }
 
 func (d *DashboardServer) fetchMessage() []byte {

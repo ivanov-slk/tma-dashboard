@@ -1,18 +1,23 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>The temperature dashboard</title>
     <meta charset="UTF-8"/>
     <meta name="description" content="The temperature dashboard" lang="en"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/javascript/htmx.js"></script>
 </head>
 <body>
 <main>
-<h1>Temperature statistics for 2024-01-04 16:27:40 &#43;0000 UTC at 1:</h1>
+
+<h1>Temperature statistics for 0001-01-01 00:00:00 &#43;0000 UTC at :</h1>
 <ul>
-<p>Temperature is 25 degrees Celsius.</p>
-<p>Pressure is 1000 hPa.</p>
-<p>Humidity is 0.6%.</p>
+<p>Temperature is 0 degrees Celsius.</p>
+<p>Pressure is 0 hPa.</p>
+<p>Humidity is 0%.</p>
 </ul>
+
 </main>
 <footer>
     <ul>
@@ -21,3 +26,4 @@
 </footer>
 </body>
 </html>
+
