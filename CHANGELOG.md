@@ -2,103 +2,87 @@
 
 ## [1.7.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.6.1...v1.7.0) (2024-02-24)
 
-
 ### Features
 
-* Add a button which leverages HTMX to display the metrics through the welcome page. ([979040e](https://github.com/ivanov-slk/tma-dashboard/commit/979040e4ba597ea13521a13f5a0f0905c27f91e5))
-
+- Add a button which leverages HTMX to display the metrics through the welcome page. ([979040e](https://github.com/ivanov-slk/tma-dashboard/commit/979040e4ba597ea13521a13f5a0f0905c27f91e5))
 
 ### Refactoring/Restructuring
 
-* Allow serving static files via go:embed. ([1a89109](https://github.com/ivanov-slk/tma-dashboard/commit/1a89109bebdace9bfac83e2f4aec57be83ec0608))
-
+- Allow serving static files via go:embed. ([1a89109](https://github.com/ivanov-slk/tma-dashboard/commit/1a89109bebdace9bfac83e2f4aec57be83ec0608))
 
 ### Maintenance
 
-* Add HTMX as a Javascript dependency embedded in the binary. ([2b87dcd](https://github.com/ivanov-slk/tma-dashboard/commit/2b87dcd13156d659ed1293e6632a82b8fe1be787))
-* Sort the items in the changelog by relative imporatance.\nLint the release-please action for better readability and maintainability. ([d383cc5](https://github.com/ivanov-slk/tma-dashboard/commit/d383cc56938ec40481f2917d91faa45b190e8c96))
+- Add HTMX as a Javascript dependency embedded in the binary. ([2b87dcd](https://github.com/ivanov-slk/tma-dashboard/commit/2b87dcd13156d659ed1293e6632a82b8fe1be787))
+- Sort the items in the changelog by relative imporatance. Lint the release-please action for better readability and maintainability. ([d383cc5](https://github.com/ivanov-slk/tma-dashboard/commit/d383cc56938ec40481f2917d91faa45b190e8c96))
 
 ## [1.6.1](https://github.com/ivanov-slk/tma-dashboard/compare/v1.6.0...v1.6.1) (2024-02-18)
 
-
 ### Refactoring/Restructuring
 
-* Move the handler code for the different endpoints into dedicated methods. ([9e52be6](https://github.com/ivanov-slk/tma-dashboard/commit/9e52be6b058e4594b89159315045e5a783708ce2))
+- Move the handler code for the different endpoints into dedicated methods. ([9e52be6](https://github.com/ivanov-slk/tma-dashboard/commit/9e52be6b058e4594b89159315045e5a783708ce2))
 
 ## [1.6.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.5.2...v1.6.0) (2024-02-18)
 
-
 ### Features
 
-* Add a welcome page. ([91f656b](https://github.com/ivanov-slk/tma-dashboard/commit/91f656b40a9ee337de3ccc60c35f2ee4ec4bccf9))
-
+- Add a welcome page. ([91f656b](https://github.com/ivanov-slk/tma-dashboard/commit/91f656b40a9ee337de3ccc60c35f2ee4ec4bccf9))
 
 ### Refactoring/Restructuring
 
-* Split the HTML template into multiple modularized sub-templates. ([d350caf](https://github.com/ivanov-slk/tma-dashboard/commit/d350caf2acaacdf54cd4b14f7c344822a193259c))
-
+- Split the HTML template into multiple modularized sub-templates. ([d350caf](https://github.com/ivanov-slk/tma-dashboard/commit/d350caf2acaacdf54cd4b14f7c344822a193259c))
 
 ### Testing
 
-* Add a test to ensure that zeroes are displayed if only unmarshable messages have been processed. ([0e42b89](https://github.com/ivanov-slk/tma-dashboard/commit/0e42b898ec3a1b30fb7bd630457629bbbced8d7a))
-* Add a test to ensure that zeroes are displayed when the channel is empty and no previous valid messages have been received. ([8a60fc3](https://github.com/ivanov-slk/tma-dashboard/commit/8a60fc3c3a896553a618f8afa6cdb7a81b92f037))
+- Add a test to ensure that zeroes are displayed if only unmarshable messages have been processed. ([0e42b89](https://github.com/ivanov-slk/tma-dashboard/commit/0e42b898ec3a1b30fb7bd630457629bbbced8d7a))
+- Add a test to ensure that zeroes are displayed when the channel is empty and no previous valid messages have been received. ([8a60fc3](https://github.com/ivanov-slk/tma-dashboard/commit/8a60fc3c3a896553a618f8afa6cdb7a81b92f037))
 
 ## [1.5.2](https://github.com/ivanov-slk/tma-dashboard/compare/v1.5.1...v1.5.2) (2024-02-11)
 
-
 ### Refactoring/Restructuring
 
-* Split ServeHTTP into separate methods for better readability and maintainability. ([318a09d](https://github.com/ivanov-slk/tma-dashboard/commit/318a09dfc74ce58cc72458bd38664b85eeaedef7))
+- Split ServeHTTP into separate methods for better readability and maintainability. ([318a09d](https://github.com/ivanov-slk/tma-dashboard/commit/318a09dfc74ce58cc72458bd38664b85eeaedef7))
 
 ## [1.5.1](https://github.com/ivanov-slk/tma-dashboard/compare/v1.5.0...v1.5.1) (2024-02-11)
 
-
 ### Bug Fixes
 
-* Add missing template files. ([e68f08d](https://github.com/ivanov-slk/tma-dashboard/commit/e68f08dabf902b4239369086d548cf7e6895c130))
+- Add missing template files. ([e68f08d](https://github.com/ivanov-slk/tma-dashboard/commit/e68f08dabf902b4239369086d548cf7e6895c130))
 
 ## [1.5.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.4.0...v1.5.0) (2024-02-10)
 
-
 ### Maintenance
 
-* Add debug files from go-approval-tests to gitignore. ([fe8dc53](https://github.com/ivanov-slk/tma-dashboard/commit/fe8dc53a9def1dfb796aa8a667209bf7b3284687))
-
+- Add debug files from go-approval-tests to gitignore. ([fe8dc53](https://github.com/ivanov-slk/tma-dashboard/commit/fe8dc53a9def1dfb796aa8a667209bf7b3284687))
 
 ### Features
 
-* Return HTML template from the server, instead of plain text. ([b65e565](https://github.com/ivanov-slk/tma-dashboard/commit/b65e5654731a674c2a6a83af0cfd5a9c5d7b830a))
-
+- Return HTML template from the server, instead of plain text. ([b65e565](https://github.com/ivanov-slk/tma-dashboard/commit/b65e5654731a674c2a6a83af0cfd5a9c5d7b830a))
 
 ### Testing
 
-* Use go approvals for the templates in the HTTP server testing suite. ([3bc82b7](https://github.com/ivanov-slk/tma-dashboard/commit/3bc82b79195025911bef9d1fd2721194c7faf3bf))
+- Use go approvals for the templates in the HTTP server testing suite. ([3bc82b7](https://github.com/ivanov-slk/tma-dashboard/commit/3bc82b79195025911bef9d1fd2721194c7faf3bf))
 
 ## [1.4.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.3.2...v1.4.0) (2024-01-29)
 
-
 ### Features
 
-* The server now correctly handles timeouts during fetching a message from NATS and defaults to the last valid message. ([dbba89e](https://github.com/ivanov-slk/tma-dashboard/commit/dbba89ed44a84c4a1c1182c3984d945701770efc))
+- The server now correctly handles timeouts during fetching a message from NATS and defaults to the last valid message. ([dbba89e](https://github.com/ivanov-slk/tma-dashboard/commit/dbba89ed44a84c4a1c1182c3984d945701770efc))
 
 ## [1.3.2](https://github.com/ivanov-slk/tma-dashboard/compare/v1.3.1...v1.3.2) (2024-01-27)
 
-
 ### Maintenance
 
-* Show log for accepted message before the nil check. ([c167f2e](https://github.com/ivanov-slk/tma-dashboard/commit/c167f2e026c89db5807c91a1497741befe1b4f34))
-
+- Show log for accepted message before the nil check. ([c167f2e](https://github.com/ivanov-slk/tma-dashboard/commit/c167f2e026c89db5807c91a1497741befe1b4f34))
 
 ### Documentation
 
-* Add documentation for the continuous consumer. ([fb4607a](https://github.com/ivanov-slk/tma-dashboard/commit/fb4607a30462420bc60aed766dc24d8450bec757))
+- Add documentation for the continuous consumer. ([fb4607a](https://github.com/ivanov-slk/tma-dashboard/commit/fb4607a30462420bc60aed766dc24d8450bec757))
 
 ## [1.3.1](https://github.com/ivanov-slk/tma-dashboard/compare/v1.3.0...v1.3.1) (2024-01-20)
 
-
 ### Refactoring/Restructuring
 
-* Continuously consume messages and send them to the internal channel. ([070ef79](https://github.com/ivanov-slk/tma-dashboard/commit/070ef795636e42f57882ff3dba35ead3387a3167))
+- Continuously consume messages and send them to the internal channel. ([070ef79](https://github.com/ivanov-slk/tma-dashboard/commit/070ef795636e42f57882ff3dba35ead3387a3167))
 
 ## [1.3.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.2.6...v1.3.0) (2024-01-18)
 
