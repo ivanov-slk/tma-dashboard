@@ -1,4 +1,14 @@
 {{template "top" .}}
-<h1>Welcome to the Temperature dashboard!</h1>
-<p>Go to /metrics to see the latest metrics.</p>
+<div id="metrics">
+  <h1>Welcome to the Temperature dashboard!</h1>
+  <p>Click the button to see the latest metrics.</p>
+  <button
+    hx-get="/metrics"
+    hx-trigger="click"
+    hx-target="#metrics"
+    hx-swap="outerHTML"
+  >
+    Display metrics
+  </button>
+</div>
 {{template "bottom" .}}

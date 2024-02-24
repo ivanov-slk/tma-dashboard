@@ -1,8 +1,8 @@
-{{template "top" .}}
-<h1>Temperature statistics for {{.Datetime}} at {{.Id}}:</h1>
-<ul>
-<p>Temperature is {{.Temperature}} degrees Celsius.</p>
-<p>Pressure is {{.Pressure}} hPa.</p>
-<p>Humidity is {{.Humidity}}%.</p>
-</ul>
-{{template "bottom" .}}
+<div id="metrics">
+  <h1>Temperature statistics for {{.Datetime}} at {{.Id}}:</h1>
+  <ul>
+    <p>Temperature is {{.Temperature}} degrees Celsius.</p>
+    <p>Pressure is {{.Pressure}} hPa.</p>
+    <p>Humidity is {{.Humidity}}%.</p>
+  </ul>
+</div>
