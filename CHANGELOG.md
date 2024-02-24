@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/ivanov-slk/tma-dashboard/compare/v1.6.0...v1.6.1) (2024-02-18)
+
+
+### Refactoring/Restructuring
+
+* Move the handler code for the different endpoints into dedicated methods. ([9e52be6](https://github.com/ivanov-slk/tma-dashboard/commit/9e52be6b058e4594b89159315045e5a783708ce2))
+
 ## [1.6.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.5.2...v1.6.0) (2024-02-18)
 
 
