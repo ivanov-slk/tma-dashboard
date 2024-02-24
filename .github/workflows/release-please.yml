@@ -25,4 +25,25 @@ jobs:
           release-type: go
           package-name: release-please-action
           token: ${{ steps.get_workflow_token.outputs.token }}
-          changelog-types: '[{"type":"build","section":"Builds","hidden":false},{"type":"chore","section":"Maintenance","hidden":false},{"type":"cicd","section":"Continuous Integration & Continuous Delivery","hidden":false},{"type":"docs","section":"Documentation","hidden":false},{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"perf","section":"Performance","hidden":false},{"type":"refactor","section":"Refactoring/Restructuring","hidden":false},{"type":"revert","section":"Revert","hidden":false},{"type":"style","section":"Style","hidden":false},{"type":"test","section":"Testing","hidden":false}]'
+          changelog-types: |
+            [
+              { "type": "feat", "section": "Features", "hidden": false },
+              { "type": "fix", "section": "Bug Fixes", "hidden": false },
+              {
+                "type": "refactor",
+                "section": "Refactoring/Restructuring",
+                "hidden": false
+              },
+              {
+                "type": "cicd",
+                "section": "Continuous Integration & Continuous Delivery",
+                "hidden": false
+              },
+              { "type": "test", "section": "Testing", "hidden": false },
+              { "type": "docs", "section": "Documentation", "hidden": false },
+              { "type": "chore", "section": "Maintenance", "hidden": false },
+              { "type": "perf", "section": "Performance", "hidden": false },
+              { "type": "build", "section": "Builds", "hidden": false },
+              { "type": "style", "section": "Style", "hidden": false },
+              { "type": "revert", "section": "Revert", "hidden": false }
+            ]
