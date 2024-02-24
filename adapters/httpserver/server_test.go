@@ -4,6 +4,7 @@ import (
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 	"time"
 
@@ -148,5 +149,20 @@ func TestWelcomeHandler(t *testing.T) {
 		server.ServeHTTP(resp, req)
 
 		approvals.VerifyString(t, resp.Body.String())
+	})
+}
+
+func TestStaticHandler(t *testing.T) {
+	t.Run("should load htmx", func(t *testing.T) {
+		req, _ := http.NewRequest(http.MethodGet, "/static/htmx.js", nil)
+		resp := httptest.NewRecorder()
+		inputChan := make(chan []byte)
+
+		server := NewDashboardServer(inputChan)
+		server.ServeHTTP(resp, req)
+
+		if !strings.Contains(resp.Body.String(), "(function(e,t)") {
+			t.Errorf("Expected HTMX to be served, but got %s", resp.Body.String())
+		}
 	})
 }

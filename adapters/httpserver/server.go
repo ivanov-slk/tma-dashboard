@@ -5,6 +5,7 @@ import (
 	"embed"
 	"encoding/json"
 	"html/template"
+	"io/fs"
 	"log/slog"
 	"net/http"
 	"time"
@@ -13,15 +14,24 @@ import (
 )
 
 var (
-	//go:embed "templates/*"
+	//go:embed "templates"
 	dashboardTemplates embed.FS
+
+	//go:embed "static"
+	dashboardStatic embed.FS
 )
 
 // NewDashboardServer initializes a Dashboard HTTP server using the provided inputChan.
 func NewDashboardServer(inputChan chan []byte) *DashboardServer {
+	staticSub, err := fs.Sub(dashboardStatic, "static")
+	if err != nil {
+		slog.Error("Failed reading static files:", "error", err)
+		panic(err)
+	}
 	d := &DashboardServer{InputChan: inputChan, router: http.NewServeMux()}
 	d.router.Handle("/", http.HandlerFunc(d.renderWelcome))
 	d.router.Handle("/metrics", http.HandlerFunc(d.renderMetrics))
+	d.router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticSub))))
 	return d
 }
 
@@ -32,7 +42,7 @@ type DashboardServer struct {
 	lastFetchedData []byte
 }
 
-// ServeHTTP fetches the most recent message from the input channel of DashboardServer.
+// ServeHTTP handles the HTTP interaction with the server.
 func (d *DashboardServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	d.router.ServeHTTP(w, r)
 }
