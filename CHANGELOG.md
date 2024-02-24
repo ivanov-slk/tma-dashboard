@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.7.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.6.1...v1.7.0) (2024-02-24)
+
+
+### Features
+
+* Add a button which leverages HTMX to display the metrics through the welcome page. ([979040e](https://github.com/ivanov-slk/tma-dashboard/commit/979040e4ba597ea13521a13f5a0f0905c27f91e5))
+
+
+### Refactoring/Restructuring
+
+* Allow serving static files via go:embed. ([1a89109](https://github.com/ivanov-slk/tma-dashboard/commit/1a89109bebdace9bfac83e2f4aec57be83ec0608))
+
+
+### Maintenance
+
+* Add HTMX as a Javascript dependency embedded in the binary. ([2b87dcd](https://github.com/ivanov-slk/tma-dashboard/commit/2b87dcd13156d659ed1293e6632a82b8fe1be787))
+* Sort the items in the changelog by relative imporatance.\nLint the release-please action for better readability and maintainability. ([d383cc5](https://github.com/ivanov-slk/tma-dashboard/commit/d383cc56938ec40481f2917d91faa45b190e8c96))
+
 ## [1.6.1](https://github.com/ivanov-slk/tma-dashboard/compare/v1.6.0...v1.6.1) (2024-02-18)
 
 
