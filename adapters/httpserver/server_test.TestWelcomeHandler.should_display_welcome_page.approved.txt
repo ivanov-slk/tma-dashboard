@@ -7,6 +7,7 @@
     <meta name="description" content="The temperature dashboard" lang="en" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="text/javascript" src="static/htmx.js"></script>
+     <link rel="stylesheet" href="static/all.css" />
   </head>
 <body>
 <main>
@@ -15,20 +16,24 @@
   <h1>Welcome to the Temperature dashboard!</h1>
   <p>Click the button to see the latest metrics.</p>
   <button
+    id="get-metrics-button"
     hx-get="/metrics"
     hx-trigger="click"
     hx-target="#metrics"
     hx-swap="outerHTML"
   >
-    Display metrics
+    <span>Display metrics</span>
+    <img class="htmx-indicator" src="static/tail-spin.svg">
   </button>
 </div>
 
 </main>
 <footer>
+  <div>
     <ul>
         <li><a href="https://github.com/ivanov-slk/tma-dashboard">GitHub</a></li>
     </ul>
+  </div>
 </footer>
 </body>
 </html>
