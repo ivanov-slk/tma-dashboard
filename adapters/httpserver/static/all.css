@@ -1,0 +1,17 @@
+#get-metrics-button {
+    padding: 1em;
+    letter-spacing: .1em;
+    background: whitesmoke;
+    border: solid;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#get-metrics-button img{
+    vertical-align: middle;
+    display: inline-block;
+    max-width: 20%;
+    max-height: auto;
+}
+
+

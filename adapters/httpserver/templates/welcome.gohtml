@@ -3,12 +3,14 @@
   <h1>Welcome to the Temperature dashboard!</h1>
   <p>Click the button to see the latest metrics.</p>
   <button
+    id="get-metrics-button"
     hx-get="/metrics"
     hx-trigger="click"
     hx-target="#metrics"
     hx-swap="outerHTML"
   >
-    Display metrics
+    <span>Display metrics</span>
+    <img class="htmx-indicator" src="static/tail-spin.svg">
   </button>
 </div>
 {{template "bottom" .}}
