@@ -7,7 +7,7 @@
     <meta name="description" content="The temperature dashboard" lang="en" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="text/javascript" src="static/htmx.js"></script>
-     <link rel="stylesheet" href="static/all.css" />
+    <link rel="stylesheet" href="static/all.css" />
   </head>
 <body>
 <main>
@@ -29,11 +29,11 @@
 
 </main>
 <footer>
-  <div>
-    <ul>
-        <li><a href="https://github.com/ivanov-slk/tma-dashboard">GitHub</a></li>
-    </ul>
-  </div>
+    <div>
+        <ul>
+            <li><a href="https://github.com/ivanov-slk/tma-dashboard">GitHub</a></li>
+        </ul>
+    </div>
 </footer>
 </body>
 </html>
