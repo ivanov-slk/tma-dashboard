@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.8.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.7.0...v1.8.0) (2024-03-01)
+
+
+### Features
+
+* Add a loading spinner during fetching metrics. ([af946eb](https://github.com/ivanov-slk/tma-dashboard/commit/af946ebe4db120dff99e02aa6101e11824fcec20))
+
+
+### Testing
+
+* Make sure the stylesheet and the spinner are correctly rendered. ([9b6b0f7](https://github.com/ivanov-slk/tma-dashboard/commit/9b6b0f796b9372d4bb7d0e00cea2b6fce6ca4da4))
+
 ## [1.7.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.6.1...v1.7.0) (2024-02-24)
 
 ### Features
