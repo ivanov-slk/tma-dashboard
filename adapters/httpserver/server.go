@@ -78,7 +78,7 @@ func (d *DashboardServer) renderMetrics(w http.ResponseWriter, r *http.Request) 
 	temperatureStats := d.parseMessage(messageData)
 
 	templ, _ := template.ParseFS(dashboardTemplates, "templates/*.gohtml")
-	err := templ.ExecuteTemplate(w, "main.gohtml", temperatureStats)
+	err := templ.ExecuteTemplate(w, "metrics.gohtml", temperatureStats)
 	if err != nil {
 		slog.Error("Error parsing the templates.", "error", err)
 	}
