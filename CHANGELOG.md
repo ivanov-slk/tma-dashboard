@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.1](https://github.com/ivanov-slk/tma-dashboard/compare/v1.8.0...v1.8.1) (2024-03-03)
+
+
+### Refactoring/Restructuring
+
+* Rename main.gohtml to metrics.gohtml to allow for better modularization of the codebase. ([ff489ba](https://github.com/ivanov-slk/tma-dashboard/commit/ff489ba9c3a82fcca1c64843ae0c0f13d31de29c))
+
 ## [1.8.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.7.0...v1.8.0) (2024-03-01)
 
 
