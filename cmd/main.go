@@ -5,17 +5,17 @@ import (
 	"net/http"
 
 	"github.com/ivanov-slk/tma-dashboard/adapters/httpserver"
+	"github.com/ivanov-slk/tma-dashboard/adapters/natsclient"
 )
 
 func main() {
 	input_data := make(chan []byte)
 	go func(c chan []byte) {
-		// natsClient, err := natsclient.NewDashboardNATSClient()
-		// if err != nil {
-		// 	log.Fatalf("failed to initialize NATS client: %s", err)
-		// }
-		// natsClient.Consume(c)
-		c <- []byte("{\"temperature\":20,\"humidity\":0.6,\"pressure\":1000,\"datetime\":\"2024-01-04T16:27:40Z\",\"id\":\"1\"}")
+		natsClient, err := natsclient.NewDashboardNATSClient()
+		if err != nil {
+			log.Fatalf("failed to initialize NATS client: %s", err)
+		}
+		natsClient.Consume(c)
 	}(input_data)
 
 	go func(c chan []byte) {
