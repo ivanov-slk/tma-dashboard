@@ -5,4 +5,14 @@
     <p>Pressure is {{.Pressure}} hPa.</p>
     <p>Humidity is {{.Humidity}}%.</p>
   </ul>
+  <button
+    id="get-metrics-button"
+    hx-get="/welcome"
+    hx-trigger="click"
+    hx-target="#metrics"
+    hx-swap="outerHTML"
+  >
+    <span>Back to main page</span>
+    <img class="htmx-indicator" src="static/tail-spin.svg">
+  </button>
 </div>
