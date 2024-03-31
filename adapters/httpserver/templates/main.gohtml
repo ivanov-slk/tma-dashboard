@@ -1,0 +1,10 @@
+{{template "top" .}}
+<div
+  id="metrics"
+  hx-get="/welcome"
+  hx-trigger="load"
+  hx-target="#metrics"
+  hx-swap="outerHTML"
+>
+</div>
+{{template "bottom" .}}

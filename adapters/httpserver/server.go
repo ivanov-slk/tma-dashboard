@@ -29,6 +29,7 @@ func NewDashboardServer(inputChan chan []byte) *DashboardServer {
 		panic(err)
 	}
 	d := &DashboardServer{InputChan: inputChan, router: http.NewServeMux()}
+	d.router.Handle("/", http.HandlerFunc(d.renderRoot))
 	d.router.Handle("/welcome", http.HandlerFunc(d.renderWelcome))
 	d.router.Handle("/metrics", http.HandlerFunc(d.renderMetrics))
 	d.router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticSub))))
@@ -87,6 +88,14 @@ func (d *DashboardServer) renderMetrics(w http.ResponseWriter, r *http.Request) 
 func (d *DashboardServer) renderWelcome(w http.ResponseWriter, r *http.Request) {
 	templ, _ := template.ParseFS(dashboardTemplates, "templates/*.gohtml")
 	err := templ.ExecuteTemplate(w, "welcome.gohtml", nil)
+	if err != nil {
+		slog.Error("Error parsing the templates.", "error", err)
+	}
+}
+
+func (d *DashboardServer) renderRoot(w http.ResponseWriter, r *http.Request) {
+	templ, _ := template.ParseFS(dashboardTemplates, "templates/*.gohtml")
+	err := templ.ExecuteTemplate(w, "main.gohtml", nil)
 	if err != nil {
 		slog.Error("Error parsing the templates.", "error", err)
 	}

@@ -152,6 +152,19 @@ func TestWelcomeHandler(t *testing.T) {
 	})
 }
 
+func TestRootHandler(t *testing.T) {
+	t.Run("should render html which automatically calls /welcome", func(t *testing.T) {
+		req, _ := http.NewRequest(http.MethodGet, "/", nil)
+		resp := httptest.NewRecorder()
+		inputChan := make(chan []byte)
+
+		server := NewDashboardServer(inputChan)
+		server.ServeHTTP(resp, req)
+
+		approvals.VerifyString(t, resp.Body.String())
+	})
+}
+
 func TestStaticHandler(t *testing.T) {
 	t.Run("should load htmx", func(t *testing.T) {
 		req, _ := http.NewRequest(http.MethodGet, "/static/htmx.js", nil)
