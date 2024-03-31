@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.9.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.8.0...v1.9.0) (2024-03-31)
+
+
+### Features
+
+* Add a 'back to main page' button on the Metrics page, which returns the user to the Welcome page. ([c3e6bb5](https://github.com/ivanov-slk/tma-dashboard/commit/c3e6bb5872318f66bbf761c0b661062ad307259e))
+
+
+### Refactoring/Restructuring
+
+* Create new root handler, which automatically calls `/welcome` once on load. ([212e87b](https://github.com/ivanov-slk/tma-dashboard/commit/212e87bac2fa6471357aceeb8a78a4efecd5b837))
+* Rename main.gohtml to metrics.gohtml to allow for better modularization of the codebase. ([ff489ba](https://github.com/ivanov-slk/tma-dashboard/commit/ff489ba9c3a82fcca1c64843ae0c0f13d31de29c))
+* Serve the welcome page only on `/welcome`. ([6bed883](https://github.com/ivanov-slk/tma-dashboard/commit/6bed883b66e1d518c34ac0bb40415016340abf9e))
+
 ## [1.8.0](https://github.com/ivanov-slk/tma-dashboard/compare/v1.7.0...v1.8.0) (2024-03-01)
 
 
