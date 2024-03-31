@@ -141,7 +141,7 @@ func TestMetricsHandler(t *testing.T) {
 
 func TestWelcomeHandler(t *testing.T) {
 	t.Run("should display welcome page", func(t *testing.T) {
-		req, _ := http.NewRequest(http.MethodGet, "/", nil)
+		req, _ := http.NewRequest(http.MethodGet, "/welcome", nil)
 		resp := httptest.NewRecorder()
 		inputChan := make(chan []byte)
 

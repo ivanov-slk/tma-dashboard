@@ -29,7 +29,7 @@ func NewDashboardServer(inputChan chan []byte) *DashboardServer {
 		panic(err)
 	}
 	d := &DashboardServer{InputChan: inputChan, router: http.NewServeMux()}
-	d.router.Handle("/", http.HandlerFunc(d.renderWelcome))
+	d.router.Handle("/welcome", http.HandlerFunc(d.renderWelcome))
 	d.router.Handle("/metrics", http.HandlerFunc(d.renderMetrics))
 	d.router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticSub))))
 	return d
